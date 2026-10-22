@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the shared mobile string table; keep in step with mobile-ios -->
+<resources>
+    <string name="cancel">Annulla</string>
+    <string name="chats">Chat</string>
+    <string name="choose_model">Scegli un modello</string>
+    <string name="close">Chiudi</string>
+    <string name="copy">Copia</string>
+    <string name="create_account_on_web">Non hai ancora un account? Creane uno su peridot.ai</string>
+    <string name="delete">Elimina</string>
+    <string name="delete_chat">Elimina chat</string>
+    <string name="delete_chat_text">“%1$s” verrà eliminata definitivamente.</string>
+    <string name="effort">Impegno</string>
+    <string name="effort_high">Alto</string>
+    <string name="effort_hint">Con più impegno ragiona più a lungo prima di rispondere. Il tuo piano stabilisce il livello massimo.</string>
+    <string name="effort_low">Basso</string>
+    <string name="effort_medium">Medio</string>
+    <string name="email">Email</string>
+    <string name="empty_title">Come posso aiutarti?</string>
+    <string name="error_generic">Qualcosa è andato storto. Riprova.</string>
+    <string name="error_network">Impossibile raggiungere Peridot. Controlla la connessione e riprova.</string>
+    <string name="google_on_web">Gli account creati con Google non possono ancora accedere qui. Per ora usa peridot.ai.</string>
+    <string name="history_signed_out">Accedi per conservare le tue chat e riprenderle da qualsiasi dispositivo.</string>
+    <string name="message_hint">Scrivi a Peridot</string>
+    <string name="messages_today">Messaggi di oggi</string>
+    <string name="model">Modello</string>
+    <string name="models_unavailable">Impossibile caricare i modelli. Risponderà il modello predefinito.</string>
+    <string name="monthly_usage">Questo mese</string>
+    <string name="new_chat">Nuova chat</string>
+    <string name="no_chats">Ancora nessuna chat</string>
+    <string name="not_in_plan">Non incluso nel tuo piano</string>
+    <string name="open_menu">Apri menu</string>
+    <string name="password">Password</string>
+    <string name="percent_used">%1$d%% utilizzato</string>
+    <string name="plan">Piano</string>
+    <string name="plan_free">Gratuito</string>
+    <string name="plan_unlimited">Illimitato</string>
+    <string name="privacy">Privacy</string>
+    <string name="rename">Rinomina</string>
+    <string name="rename_chat">Rinomina chat</string>
+    <string name="retry">Riprova</string>
+    <string name="save">Salva</string>
+    <string name="send">Invia messaggio</string>
+    <string name="session_expired">La sessione è scaduta. Accedi di nuovo.</string>
+    <string name="sign_in">Accedi</string>
+    <string name="sign_in_title">Accedi a Peridot</string>
+    <string name="sign_out">Esci</string>
+    <string name="sign_out_title">Uscire da Peridot?</string>
+    <string name="stop">Interrompi</string>
+    <string name="terms">Termini</string>
+    <string name="untitled">Senza titolo</string>
+    <string name="used_of">%1$d di %2$d</string>
+</resources>

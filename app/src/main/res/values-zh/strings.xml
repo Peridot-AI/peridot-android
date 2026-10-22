@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the shared mobile string table; keep in step with mobile-ios -->
+<resources>
+    <string name="cancel">取消</string>
+    <string name="chats">聊天</string>
+    <string name="choose_model">选择模型</string>
+    <string name="close">关闭</string>
+    <string name="copy">复制</string>
+    <string name="create_account_on_web">还没有账户？在 peridot.ai 上创建</string>
+    <string name="delete">删除</string>
+    <string name="delete_chat">删除聊天</string>
+    <string name="delete_chat_text">“%1$s”将被永久删除。</string>
+    <string name="effort">推理强度</string>
+    <string name="effort_high">高</string>
+    <string name="effort_hint">强度越高，回答前思考得越久。你的套餐决定最高级别。</string>
+    <string name="effort_low">低</string>
+    <string name="effort_medium">中</string>
+    <string name="email">邮箱</string>
+    <string name="empty_title">我能帮你做什么？</string>
+    <string name="error_generic">出了点问题，请重试。</string>
+    <string name="error_network">无法连接 Peridot。请检查网络连接后重试。</string>
+    <string name="google_on_web">使用 Google 创建的账户暂时无法在此登录。目前请使用 peridot.ai。</string>
+    <string name="history_signed_out">登录后即可保存聊天记录，并在任何设备上继续。</string>
+    <string name="message_hint">给 Peridot 发消息</string>
+    <string name="messages_today">今日消息</string>
+    <string name="model">模型</string>
+    <string name="models_unavailable">无法加载模型，将由默认模型回答。</string>
+    <string name="monthly_usage">本月</string>
+    <string name="new_chat">新聊天</string>
+    <string name="no_chats">还没有聊天</string>
+    <string name="not_in_plan">不包含在你的套餐中</string>
+    <string name="open_menu">打开菜单</string>
+    <string name="password">密码</string>
+    <string name="percent_used">已使用 %1$d%%</string>
+    <string name="plan">套餐</string>
+    <string name="plan_free">免费</string>
+    <string name="plan_unlimited">无限制</string>
+    <string name="privacy">隐私</string>
+    <string name="rename">重命名</string>
+    <string name="rename_chat">重命名聊天</string>
+    <string name="retry">重试</string>
+    <string name="save">保存</string>
+    <string name="send">发送消息</string>
+    <string name="session_expired">你的登录已过期，请重新登录。</string>
+    <string name="sign_in">登录</string>
+    <string name="sign_in_title">登录 Peridot</string>
+    <string name="sign_out">退出登录</string>
+    <string name="sign_out_title">要退出 Peridot 吗？</string>
+    <string name="stop">停止</string>
+    <string name="terms">条款</string>
+    <string name="untitled">未命名</string>
+    <string name="used_of">%1$d / %2$d</string>
+</resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the shared mobile string table; keep in step with mobile-ios -->
+<resources>
+    <string name="cancel">キャンセル</string>
+    <string name="chats">チャット</string>
+    <string name="choose_model">モデルを選択</string>
+    <string name="close">閉じる</string>
+    <string name="copy">コピー</string>
+    <string name="create_account_on_web">アカウントをお持ちでない場合は peridot.ai で作成</string>
+    <string name="delete">削除</string>
+    <string name="delete_chat">チャットを削除</string>
+    <string name="delete_chat_text">「%1$s」は完全に削除されます。</string>
+    <string name="effort">思考の強度</string>
+    <string name="effort_high">高</string>
+    <string name="effort_hint">強度を上げると、回答前により長く考えます。上限はプランによって決まります。</string>
+    <string name="effort_low">低</string>
+    <string name="effort_medium">中</string>
+    <string name="email">メールアドレス</string>
+    <string name="empty_title">何をお手伝いしましょうか？</string>
+    <string name="error_generic">問題が発生しました。もう一度お試しください。</string>
+    <string name="error_network">Peridot に接続できません。接続を確認して、もう一度お試しください。</string>
+    <string name="google_on_web">Google で作成したアカウントは、まだここではログインできません。当面は peridot.ai をご利用ください。</string>
+    <string name="history_signed_out">ログインするとチャットが保存され、どのデバイスからでも続きを再開できます。</string>
+    <string name="message_hint">Peridot にメッセージ</string>
+    <string name="messages_today">今日のメッセージ</string>
+    <string name="model">モデル</string>
+    <string name="models_unavailable">モデルを読み込めませんでした。既定のモデルが回答します。</string>
+    <string name="monthly_usage">今月</string>
+    <string name="new_chat">新しいチャット</string>
+    <string name="no_chats">まだチャットはありません</string>
+    <string name="not_in_plan">ご利用のプランには含まれていません</string>
+    <string name="open_menu">メニューを開く</string>
+    <string name="password">パスワード</string>
+    <string name="percent_used">%1$d%% 使用済み</string>
+    <string name="plan">プラン</string>
+    <string name="plan_free">無料</string>
+    <string name="plan_unlimited">無制限</string>
+    <string name="privacy">プライバシー</string>
+    <string name="rename">名前を変更</string>
+    <string name="rename_chat">チャット名を変更</string>
+    <string name="retry">再試行</string>
+    <string name="save">保存</string>
+    <string name="send">メッセージを送信</string>
+    <string name="session_expired">セッションの有効期限が切れました。もう一度ログインしてください。</string>
+    <string name="sign_in">ログイン</string>
+    <string name="sign_in_title">Peridotにサインイン</string>
+    <string name="sign_out">ログアウト</string>
+    <string name="sign_out_title">Peridot からログアウトしますか？</string>
+    <string name="stop">停止</string>
+    <string name="terms">利用規約</string>
+    <string name="untitled">無題</string>
+    <string name="used_of">%1$d / %2$d</string>
+</resources>
