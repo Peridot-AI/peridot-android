@@ -97,8 +97,8 @@ class MarkdownTest {
     @Test
     fun links() {
         assertEquals(
-            listOf(Span("see "), Span("docs", url = "https://peridot.ai/docs"), Span(" or "), Span("https://x.dev/a", url = "https://x.dev/a"), Span(".")),
-            Markdown.spans("see [docs](https://peridot.ai/docs) or https://x.dev/a."),
+            listOf(Span("see "), Span("docs", url = "https://tryperidot.io/docs"), Span(" or "), Span("https://x.dev/a", url = "https://x.dev/a"), Span(".")),
+            Markdown.spans("see [docs](https://tryperidot.io/docs) or https://x.dev/a."),
         )
     }
 

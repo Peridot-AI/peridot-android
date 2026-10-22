@@ -6,7 +6,7 @@
     <string name="choose_model">Choisir un modèle</string>
     <string name="close">Fermer</string>
     <string name="copy">Copier</string>
-    <string name="create_account_on_web">Pas encore de compte ? Créez-en un sur peridot.ai</string>
+    <string name="create_account_on_web">Pas encore de compte ? Créez-en un sur tryperidot.io</string>
     <string name="delete">Supprimer</string>
     <string name="delete_chat">Supprimer le chat</string>
     <string name="delete_chat_text">« %1$s » sera supprimé définitivement.</string>

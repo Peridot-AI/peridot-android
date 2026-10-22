@@ -6,7 +6,7 @@
     <string name="choose_model">モデルを選択</string>
     <string name="close">閉じる</string>
     <string name="copy">コピー</string>
-    <string name="create_account_on_web">アカウントをお持ちでない場合は peridot.ai で作成</string>
+    <string name="create_account_on_web">アカウントをお持ちでない場合は tryperidot.io で作成</string>
     <string name="delete">削除</string>
     <string name="delete_chat">チャットを削除</string>
     <string name="delete_chat_text">「%1$s」は完全に削除されます。</string>

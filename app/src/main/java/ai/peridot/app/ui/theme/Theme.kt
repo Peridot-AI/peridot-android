@@ -10,7 +10,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-/** The website's palette (dark only, like peridot.ai). */
+/** The website's palette (dark only, like tryperidot.io). */
 object Peridot {
     val Background = Color(0xFF141413)
     val Surface = Color(0xFF1B1A19)

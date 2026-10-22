@@ -1,6 +1,6 @@
 # Peridot for Android
 
-[Peridot AI](https://peridot.ai) on Android: a native app (Kotlin, Jetpack Compose) that talks to the same API as the website, the desktop app and the [CLI](https://github.com/Peridot-AI/peridot-cli).
+[Peridot AI](https://tryperidot.io) on Android: a native app (Kotlin, Jetpack Compose) that talks to the same API as the website, the desktop app and the [CLI](https://github.com/Peridot-AI/peridot-cli).
 
 - **Chat** with streamed answers, rendered as Markdown (code blocks with a copy button, tables, lists, links). Stop an answer at any time; a stopped answer is kept.
 - **Models and effort**: tap the model name at the top. Models your plan doesn't include are shown locked.
@@ -9,11 +9,11 @@
 - Without signing in you can chat with the free limits; history needs an account.
 - In English, Spanish, Chinese, Japanese, French, German and Italian, like the website.
 
-Sign in with Google (the system account picker, through Credential Manager) or with email and password. New email accounts are created on [peridot.ai](https://peridot.ai/signup).
+Sign in with Google (the system account picker, through Credential Manager) or with email and password. New email accounts are created on [tryperidot.io](https://tryperidot.io/signup).
 
 ## Privacy
 
-The app only talks to the Peridot API (`https://peridot.ai/api`). The sign-in token is stored encrypted with a key from the Android Keystore, and it is excluded from backups and device transfers.
+The app only talks to the Peridot API (`https://tryperidot.io/api`). The sign-in token is stored encrypted with a key from the Android Keystore, and it is excluded from backups and device transfers.
 
 ## Build
 
