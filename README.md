@@ -13,7 +13,7 @@ Sign in with Google (the system account picker, through Credential Manager) or w
 
 ## Privacy
 
-The app only talks to the Peridot API (`https://tryperidot.io/api`). The sign-in token is stored encrypted with a key from the Android Keystore, and it is excluded from backups and device transfers.
+The app only talks to the Peridot API (`https://api.tryperidot.io/api`). The sign-in token is stored encrypted with a key from the Android Keystore, and it is excluded from backups and device transfers.
 
 ## Build
 

@@ -9,7 +9,7 @@ plugins {
 
 // Point the app at another server with -PperidotApiUrl=... (the Android emulator reaches
 // the host's `bun run dev` server at http://10.0.2.2:3001/api)
-val apiUrl = (findProperty("peridotApiUrl") as String?) ?: "https://tryperidot.io/api"
+val apiUrl = (findProperty("peridotApiUrl") as String?) ?: "https://api.tryperidot.io/api"
 val webUrl = (findProperty("peridotWebUrl") as String?) ?: "https://tryperidot.io"
 
 // Release signing is read from the environment, so no key ever lives in the repo
