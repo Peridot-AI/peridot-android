@@ -45,6 +45,12 @@ class PeridotApi(
     suspend fun login(email: String, password: String): AuthResponse =
         post("/auth/login", buildJsonObject { put("email", email); put("password", password) })
 
+    /** Signs in with a Google ID token (issued for the website's OAuth client, see [authConfig]). */
+    suspend fun googleLogin(idToken: String): AuthResponse =
+        post("/auth/google", buildJsonObject { put("idToken", idToken) })
+
+    suspend fun authConfig(): AuthConfig = get("/auth/config")
+
     suspend fun me(): MeResponse = get("/auth/me")
 
     // ── Models ──

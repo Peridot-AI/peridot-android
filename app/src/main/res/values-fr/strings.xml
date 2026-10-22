@@ -19,7 +19,9 @@
     <string name="empty_title">Comment puis-je vous aider ?</string>
     <string name="error_generic">Une erreur s’est produite. Veuillez réessayer.</string>
     <string name="error_network">Impossible de joindre Peridot. Vérifiez votre connexion et réessayez.</string>
-    <string name="google_on_web">Les comptes créés avec Google ne peuvent pas encore se connecter ici. Utilisez peridot.ai pour l’instant.</string>
+    <string name="continue_with_google">Continuer avec Google</string>
+    <string name="or">ou</string>
+    <string name="google_unavailable">La connexion avec Google n’est pas disponible pour le moment. Réessayez ou connectez-vous avec votre e-mail.</string>
     <string name="history_signed_out">Connectez-vous pour conserver vos chats et les retrouver sur tous vos appareils.</string>
     <string name="message_hint">Écrire à Peridot</string>
     <string name="messages_today">Messages aujourd\'hui</string>

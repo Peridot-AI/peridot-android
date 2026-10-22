@@ -4,8 +4,10 @@ import ai.peridot.app.BuildConfig
 import ai.peridot.app.R
 import ai.peridot.app.data.Conversation
 import ai.peridot.app.ui.theme.Peridot
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
@@ -25,9 +28,11 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
@@ -42,6 +47,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentType
 import androidx.compose.ui.semantics.semantics
@@ -55,8 +61,8 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 /**
- * Sign in with email and password. New accounts are made on the website (it also has Google
- * sign-in and the legal pages); the app signs in to them.
+ * Sign in with Google or with email and password. New email accounts are made on the website
+ * (it also has the legal pages); Google sign-in works for any Google account, like on the website.
  */
 @Composable
 fun SignInDialog(vm: ChatViewModel, onDismiss: () -> Unit) {
@@ -97,6 +103,30 @@ fun SignInDialog(vm: ChatViewModel, onDismiss: () -> Unit) {
                             textAlign = TextAlign.Center,
                         )
                         Spacer(Modifier.height(28.dp))
+                        OutlinedButton(
+                            onClick = {
+                                vm.clearAuthError()
+                                vm.signInWithGoogle({ googleIdToken(context, it) }, onDone = onDismiss)
+                            },
+                            enabled = !auth.busy,
+                            border = BorderStroke(1.dp, Peridot.Border),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = Peridot.Text),
+                            modifier = Modifier.fillMaxWidth().height(48.dp),
+                        ) {
+                            Image(painterResource(R.drawable.ic_google), contentDescription = null, modifier = Modifier.size(18.dp))
+                            Spacer(Modifier.width(10.dp))
+                            Text(stringResource(R.string.continue_with_google))
+                        }
+                        Row(Modifier.fillMaxWidth().padding(vertical = 18.dp), verticalAlignment = Alignment.CenterVertically) {
+                            HorizontalDivider(Modifier.weight(1f), color = Peridot.Border)
+                            Text(
+                                stringResource(R.string.or),
+                                color = Peridot.Muted,
+                                style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier.padding(horizontal = 12.dp),
+                            )
+                            HorizontalDivider(Modifier.weight(1f), color = Peridot.Border)
+                        }
                         OutlinedTextField(
                             value = email,
                             onValueChange = { email = it; vm.clearAuthError() },
@@ -141,16 +171,8 @@ fun SignInDialog(vm: ChatViewModel, onDismiss: () -> Unit) {
                             else Text(stringResource(R.string.sign_in))
                         }
                         Spacer(Modifier.height(18.dp))
-                        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                            TextButton(onClick = { openUrl(context, "${BuildConfig.WEB_URL}/signup") }) {
-                                Text(stringResource(R.string.create_account_on_web), color = Peridot.Mint, textAlign = TextAlign.Center)
-                            }
-                            Text(
-                                stringResource(R.string.google_on_web),
-                                color = Peridot.Muted,
-                                style = MaterialTheme.typography.bodySmall,
-                                textAlign = TextAlign.Center,
-                            )
+                        TextButton(onClick = { openUrl(context, "${BuildConfig.WEB_URL}/signup") }) {
+                            Text(stringResource(R.string.create_account_on_web), color = Peridot.Mint, textAlign = TextAlign.Center)
                         }
                         Spacer(Modifier.height(24.dp))
                     }

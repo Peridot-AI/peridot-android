@@ -9,7 +9,7 @@
 - Without signing in you can chat with the free limits; history needs an account.
 - In English, Spanish, Chinese, Japanese, French, German and Italian, like the website.
 
-Sign-in is by email and password. New accounts are created on [peridot.ai](https://peridot.ai/signup); accounts created with Google can't sign in to the app yet.
+Sign in with Google (the system account picker, through Credential Manager) or with email and password. New email accounts are created on [peridot.ai](https://peridot.ai/signup).
 
 ## Privacy
 
@@ -50,6 +50,19 @@ Debug builds allow plain HTTP to `10.0.2.2` and `localhost` only; release builds
 
 Keep the keystore out of the repo (`.gitignore` already excludes `*.jks` and `*.keystore`).
 
+### Google sign-in (one-time setup)
+
+The app asks Google for an ID token for the **website's** OAuth client (it reads that client ID from `GET /api/auth/config`, so nothing is built in), and the server accepts it like a website sign-in. Google only hands the token to the app when the same Google Cloud project also has an **Android** OAuth client for it. In [Google Cloud Console → APIs & Services → Credentials](https://console.cloud.google.com/apis/credentials), in the project of the server's `GOOGLE_CLIENT_ID`:
+
+1. **Create credentials → OAuth client ID → Android**, package name `ai.peridot.app`, and the SHA-1 of the certificate the app is signed with:
+   - release keystore: `keytool -list -v -keystore "$PERIDOT_KEYSTORE" -alias "$PERIDOT_KEY_ALIAS"`
+   - debug builds (your machine's debug key): `keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android`
+   - apps from Google Play (Play App Signing): the SHA-1 of the *app signing key* in Play Console → Test and release → App integrity
+2. Add one Android client per certificate (release, Play signing, each developer's debug key). An Android client has no secret, and nothing goes into the repo or the server's `.env`.
+3. The OAuth consent screen must be published (or your account listed as a test user).
+
+Without a matching Android client the picker fails and the app says Google sign-in isn't available; email sign-in keeps working.
+
 ## Layout
 
 ```
@@ -57,7 +70,7 @@ app/src/main/java/ai/peridot/app/
   MainActivity.kt
   data/        PeridotApi (REST + streaming), SseParser, Settings (encrypted token), API models
   markdown/    Markdown parser (plain Kotlin, unit-tested)
-  ui/          ChatViewModel, ChatScreen, Sidebar, Sheets (model, account), Dialogs (sign-in), MarkdownView, theme
+  ui/          ChatViewModel, ChatScreen, Sidebar, Sheets (model, account), Dialogs (sign-in), GoogleSignIn, MarkdownView, theme
 ```
 
 CI (GitHub Actions) runs the unit tests and lint and builds the debug and release APKs on every push; the debug APK is attached to each run.

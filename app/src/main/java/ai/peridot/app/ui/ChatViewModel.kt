@@ -93,12 +93,28 @@ class ChatViewModel(app: Application) : AndroidViewModel(app) {
     fun signIn(email: String, password: String, onDone: () -> Unit) =
         authenticate(onDone) { api.login(email.trim(), password) }
 
-    private fun authenticate(onDone: () -> Unit, call: suspend () -> ai.peridot.app.data.AuthResponse) {
+    /**
+     * Signs in with Google. [idToken] shows the system's Google account picker for the given
+     * OAuth client and returns the ID token, or null when the user closed it.
+     */
+    fun signInWithGoogle(idToken: suspend (serverClientId: String) -> String?, onDone: () -> Unit) =
+        authenticate(onDone) {
+            val clientId = api.authConfig().googleClientId
+            if (clientId.isBlank()) throw ApiException(string(R.string.google_unavailable), 503)
+            idToken(clientId)?.let { api.googleLogin(it) }
+        }
+
+    /** Runs a sign-in; [call] returns null when the user backed out, which is not an error. */
+    private fun authenticate(onDone: () -> Unit, call: suspend () -> ai.peridot.app.data.AuthResponse?) {
         if (_auth.value.busy) return
         _auth.value = AuthState(busy = true)
         viewModelScope.launch {
             try {
                 val result = call()
+                if (result == null) {
+                    _auth.value = AuthState()
+                    return@launch
+                }
                 token = result.token
                 settings.token = result.token
                 _state.update { it.copy(user = result.user) }

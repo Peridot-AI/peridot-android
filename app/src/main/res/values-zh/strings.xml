@@ -19,7 +19,9 @@
     <string name="empty_title">我能帮你做什么？</string>
     <string name="error_generic">出了点问题，请重试。</string>
     <string name="error_network">无法连接 Peridot。请检查网络连接后重试。</string>
-    <string name="google_on_web">使用 Google 创建的账户暂时无法在此登录。目前请使用 peridot.ai。</string>
+    <string name="continue_with_google">使用 Google 继续</string>
+    <string name="or">或</string>
+    <string name="google_unavailable">Google 登录暂时不可用。请重试，或使用邮箱登录。</string>
     <string name="history_signed_out">登录后即可保存聊天记录，并在任何设备上继续。</string>
     <string name="message_hint">给 Peridot 发消息</string>
     <string name="messages_today">今日消息</string>

@@ -19,7 +19,9 @@
     <string name="empty_title">Wobei kann ich dir helfen?</string>
     <string name="error_generic">Etwas ist schiefgelaufen. Bitte versuche es erneut.</string>
     <string name="error_network">Peridot ist nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.</string>
-    <string name="google_on_web">Mit Google erstellte Konten können sich hier noch nicht anmelden. Nutze vorerst peridot.ai.</string>
+    <string name="continue_with_google">Weiter mit Google</string>
+    <string name="or">oder</string>
+    <string name="google_unavailable">Die Anmeldung mit Google ist gerade nicht verfügbar. Versuche es erneut oder melde dich mit deiner E-Mail an.</string>
     <string name="history_signed_out">Melde dich an, um deine Chats zu behalten und auf jedem Gerät weiterzumachen.</string>
     <string name="message_hint">Nachricht an Peridot</string>
     <string name="messages_today">Nachrichten heute</string>

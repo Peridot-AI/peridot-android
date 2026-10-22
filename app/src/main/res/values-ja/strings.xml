@@ -19,7 +19,9 @@
     <string name="empty_title">何をお手伝いしましょうか？</string>
     <string name="error_generic">問題が発生しました。もう一度お試しください。</string>
     <string name="error_network">Peridot に接続できません。接続を確認して、もう一度お試しください。</string>
-    <string name="google_on_web">Google で作成したアカウントは、まだここではログインできません。当面は peridot.ai をご利用ください。</string>
+    <string name="continue_with_google">Googleで続行</string>
+    <string name="or">または</string>
+    <string name="google_unavailable">現在 Google でログインできません。もう一度お試しいただくか、メールでログインしてください。</string>
     <string name="history_signed_out">ログインするとチャットが保存され、どのデバイスからでも続きを再開できます。</string>
     <string name="message_hint">Peridot にメッセージ</string>
     <string name="messages_today">今日のメッセージ</string>

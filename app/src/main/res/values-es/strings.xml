@@ -19,7 +19,9 @@
     <string name="empty_title">¿En qué puedo ayudarte?</string>
     <string name="error_generic">Algo salió mal. Inténtalo de nuevo.</string>
     <string name="error_network">No se puede conectar con Peridot. Comprueba tu conexión e inténtalo de nuevo.</string>
-    <string name="google_on_web">Las cuentas creadas con Google aún no pueden iniciar sesión aquí. Por ahora, usa peridot.ai.</string>
+    <string name="continue_with_google">Continuar con Google</string>
+    <string name="or">o</string>
+    <string name="google_unavailable">El inicio de sesión con Google no está disponible ahora. Inténtalo de nuevo o inicia sesión con tu correo.</string>
     <string name="history_signed_out">Inicia sesión para guardar tus chats y retomarlos en cualquier dispositivo.</string>
     <string name="message_hint">Escribe a Peridot</string>
     <string name="messages_today">Mensajes de hoy</string>

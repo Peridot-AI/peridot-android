@@ -20,7 +20,9 @@
     <string name="empty_title">What can I help you with?</string>
     <string name="error_generic">Something went wrong. Please try again.</string>
     <string name="error_network">Can’t reach Peridot. Check your connection and try again.</string>
-    <string name="google_on_web">Accounts created with Google can’t sign in here yet. Use peridot.ai for now.</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="or">or</string>
+    <string name="google_unavailable">Google sign-in isn’t available right now. Try again, or sign in with your email.</string>
     <string name="history_signed_out">Sign in to keep your chats and pick them up again on any device.</string>
     <string name="message_hint">Message Peridot</string>
     <string name="messages_today">Messages today</string>

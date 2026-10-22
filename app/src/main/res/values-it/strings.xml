@@ -19,7 +19,9 @@
     <string name="empty_title">Come posso aiutarti?</string>
     <string name="error_generic">Qualcosa è andato storto. Riprova.</string>
     <string name="error_network">Impossibile raggiungere Peridot. Controlla la connessione e riprova.</string>
-    <string name="google_on_web">Gli account creati con Google non possono ancora accedere qui. Per ora usa peridot.ai.</string>
+    <string name="continue_with_google">Continua con Google</string>
+    <string name="or">oppure</string>
+    <string name="google_unavailable">L’accesso con Google non è disponibile al momento. Riprova o accedi con la tua email.</string>
     <string name="history_signed_out">Accedi per conservare le tue chat e riprenderle da qualsiasi dispositivo.</string>
     <string name="message_hint">Scrivi a Peridot</string>
     <string name="messages_today">Messaggi di oggi</string>

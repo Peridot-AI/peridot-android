@@ -20,6 +20,10 @@ data class User(
 @Serializable
 data class AuthResponse(val token: String, val user: User)
 
+/** Public sign-in config; Google ID tokens must be requested for [googleClientId]. */
+@Serializable
+data class AuthConfig(val googleClientId: String = "")
+
 @Serializable
 data class Limits(
     val plan: String = "free",
