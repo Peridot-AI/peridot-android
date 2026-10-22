@@ -65,11 +65,9 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -241,14 +239,14 @@ private fun Messages(messages: List<ChatMessage>, onRetry: () -> Unit) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun UserBubble(text: String) {
-    val clipboard = LocalClipboardManager.current
+    val copyText = rememberCopy()
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
         Surface(
             color = Peridot.SurfaceHigh,
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier
                 .widthIn(max = 320.dp)
-                .combinedClickable(onClick = {}, onLongClick = { clipboard.setText(AnnotatedString(text)) }),
+                .combinedClickable(onClick = {}, onLongClick = { copyText(text) }),
         ) {
             Text(text, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp))
         }
@@ -257,7 +255,7 @@ private fun UserBubble(text: String) {
 
 @Composable
 private fun ModelMessage(message: ChatMessage, isLast: Boolean, onRetry: () -> Unit) {
-    val clipboard = LocalClipboardManager.current
+    val copyText = rememberCopy()
     Column(Modifier.fillMaxWidth()) {
         if (message.text.isEmpty() && message.streaming) {
             PeridotLogo(22.dp, thinking = true, modifier = Modifier.padding(vertical = 4.dp))
@@ -274,7 +272,7 @@ private fun ModelMessage(message: ChatMessage, isLast: Boolean, onRetry: () -> U
             }
         } else if (!message.streaming && message.text.isNotEmpty()) {
             TextButton(
-                onClick = { clipboard.setText(AnnotatedString(message.text)) },
+                onClick = { copyText(message.text) },
                 contentPadding = PaddingValues(horizontal = 0.dp),
             ) {
                 Text(stringResource(R.string.copy), color = Peridot.Muted, fontSize = 13.sp)

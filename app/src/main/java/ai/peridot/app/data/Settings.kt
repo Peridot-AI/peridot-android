@@ -4,6 +4,7 @@ import android.content.Context
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
+import androidx.core.content.edit
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -19,19 +20,17 @@ class Settings(context: Context) {
 
     var token: String?
         get() = prefs.getString(KEY_TOKEN, null)?.let { decrypt(it) }
-        set(value) {
-            prefs.edit().apply {
-                if (value == null) remove(KEY_TOKEN) else putString(KEY_TOKEN, encrypt(value))
-            }.apply()
+        set(value) = prefs.edit {
+            if (value == null) remove(KEY_TOKEN) else putString(KEY_TOKEN, encrypt(value))
         }
 
     var model: String?
         get() = prefs.getString(KEY_MODEL, null)
-        set(value) = prefs.edit().putString(KEY_MODEL, value).apply()
+        set(value) = prefs.edit { putString(KEY_MODEL, value) }
 
     var effort: Effort
         get() = Effort.entries.firstOrNull { it.name == prefs.getString(KEY_EFFORT, null) } ?: Effort.Medium
-        set(value) = prefs.edit().putString(KEY_EFFORT, value.name).apply()
+        set(value) = prefs.edit { putString(KEY_EFFORT, value.name) }
 
     private fun key(): SecretKey {
         val store = KeyStore.getInstance(KEYSTORE).apply { load(null) }

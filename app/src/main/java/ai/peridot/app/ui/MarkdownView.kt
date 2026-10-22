@@ -30,7 +30,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
@@ -91,7 +90,7 @@ private fun BlockView(block: Block) {
 
 @Composable
 private fun CodeBlock(block: Block.Code) {
-    val clipboard = LocalClipboardManager.current
+    val copyText = rememberCopy()
     Surface(
         color = Peridot.Code,
         shape = RoundedCornerShape(12.dp),
@@ -101,7 +100,7 @@ private fun CodeBlock(block: Block.Code) {
         Column {
             Row(Modifier.fillMaxWidth().padding(start = 14.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text(block.language, color = Peridot.Muted, fontSize = 12.sp, modifier = Modifier.weight(1f))
-                TextButton(onClick = { clipboard.setText(AnnotatedString(block.code)) }) {
+                TextButton(onClick = { copyText(block.code) }) {
                     Text(stringResource(R.string.copy), color = Peridot.Muted, fontSize = 12.sp)
                 }
             }

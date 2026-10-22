@@ -3,6 +3,7 @@ package ai.peridot.app.ui
 import ai.peridot.app.R
 import ai.peridot.app.ui.theme.Peridot
 import android.content.ActivityNotFoundException
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -20,11 +21,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ClipEntry
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -33,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.launch
 
 private val LogoBrush = listOf(Color(0xFFD4F3EA), Color(0xFF8FE0C8), Color(0xFF5CC9A8))
 
@@ -109,4 +115,14 @@ fun planName(plan: String?, unlimited: Boolean): String = when {
     plan == "extended" -> "Extended 5x"
     plan == "extended10" -> "Extended 10x"
     else -> stringResource(R.string.plan_free)
+}
+
+/** Returns a function that puts text on the clipboard. */
+@Composable
+fun rememberCopy(): (String) -> Unit {
+    val clipboard = LocalClipboard.current
+    val scope = rememberCoroutineScope()
+    return remember(clipboard, scope) {
+        { text -> scope.launch { clipboard.setClipEntry(ClipEntry(ClipData.newPlainText("Peridot", text))) } }
+    }
 }
