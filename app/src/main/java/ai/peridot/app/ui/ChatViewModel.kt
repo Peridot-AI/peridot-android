@@ -8,7 +8,6 @@ import ai.peridot.app.data.CheckoutOffer
 import ai.peridot.app.data.ReferralStats
 import ai.peridot.app.data.ShareInfo
 import ai.peridot.app.data.shareLink
-import java.util.Locale
 import ai.peridot.app.data.Conversation
 import ai.peridot.app.data.Effort
 import ai.peridot.app.data.Limits
@@ -443,12 +442,11 @@ class ChatViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    /** Opens Stripe's checkout page for the plan (through [openUrl]); back in the app, the account is reloaded. */
+    /** Opens the website's checkout for the plan (through [openUrl]); back in the app, the account is reloaded. */
     fun checkout(plan: String, openUrl: (String) -> Unit) {
-        val lang = Locale.getDefault().language
         viewModelScope.launch {
             try {
-                val url = api.checkoutSession(plan, lang)
+                val url = api.appCheckout(plan)
                 _state.update { it.copy(awaitingPlan = true) }
                 openUrl(url)
             } catch (e: CancellationException) {

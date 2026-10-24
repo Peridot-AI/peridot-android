@@ -91,18 +91,14 @@ class PeridotApi(
     // ── Invites ──
     suspend fun referrals(): ReferralStats = get("/referrals")
 
-    // ── Plans: the payment itself happens on Stripe's page in the browser ──
+    // ── Plans: the payment itself happens on the website's checkout in the browser ──
     suspend fun checkoutConfig(): CheckoutConfig = get("/checkout/config")
 
     suspend fun checkoutOffer(): CheckoutOffer = get("/checkout/offer")
 
-    /** Stripe's checkout page for the plan; the consents were given in the app. */
-    suspend fun checkoutSession(plan: String, lang: String): String =
-        post<CheckoutSession>("/checkout/session", buildJsonObject {
-            put("plan", plan)
-            put("lang", lang)
-            put("consent", buildJsonObject { put("terms", true); put("immediateStart", true) })
-        }).url
+    /** The website's checkout for the plan, with a one-time code that signs the browser in to this account. */
+    suspend fun appCheckout(plan: String): String =
+        post<CheckoutSession>("/checkout/app", buildJsonObject { put("plan", plan) }).url
 
     // ── Streaming chat ──
     /**

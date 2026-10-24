@@ -69,11 +69,9 @@
     <string name="plan_extended10_blurb">10 veces más uso que Plus</string>
     <string name="free_trial_days">Prueba gratuita de %1$d días</string>
     <string name="friend_discount">%1$d%% de descuento en tu primer mes. Te invitó un amigo.</string>
-    <string name="consent_terms">Acepto los Términos del servicio y he leído la Política de privacidad.</string>
-    <string name="consent_immediate">Pido que mi plan empiece de inmediato, antes de que termine el plazo de desistimiento de 14 días, y entiendo que pierdo mi derecho de desistimiento una vez que empiece.</string>
     <string name="continue_to_payment">Continuar al pago</string>
     <string name="start_free_trial">Empezar prueba gratuita</string>
-    <string name="payment_in_browser">El pago se abre en la página segura de Stripe en tu navegador. Los datos de la tarjeta nunca llegan a nuestros servidores.</string>
+    <string name="payment_in_browser">El pago se abre en tu navegador con la sesión ya iniciada. Stripe gestiona los datos de la tarjeta, que nunca llegan a nuestros servidores.</string>
     <string name="finish_payment">Termina el pago en tu navegador. Tu plan se activará solo cuando vuelvas.</string>
     <string name="check_again">Comprobar de nuevo</string>
     <string name="plan_active">Tu plan está activo. ¡Disfrútalo!</string>

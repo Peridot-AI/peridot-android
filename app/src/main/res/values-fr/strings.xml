@@ -69,11 +69,9 @@
     <string name="plan_extended10_blurb">10 fois plus d\'utilisation que Plus</string>
     <string name="free_trial_days">Essai gratuit de %1$d jours</string>
     <string name="friend_discount">%1$d %% de réduction sur votre premier mois. Vous avez été invité par un ami.</string>
-    <string name="consent_terms">J\'accepte les Conditions d\'utilisation et j\'ai lu la Politique de confidentialité.</string>
-    <string name="consent_immediate">Je demande que mon forfait commence immédiatement, avant la fin du délai de rétractation de 14 jours, et je comprends que je perds mon droit de rétractation dès qu\'il commence.</string>
     <string name="continue_to_payment">Continuer vers le paiement</string>
     <string name="start_free_trial">Commencer l\'essai gratuit</string>
-    <string name="payment_in_browser">Le paiement s\'ouvre sur la page sécurisée de Stripe dans votre navigateur. Les données de carte ne passent jamais par nos serveurs.</string>
+    <string name="payment_in_browser">Le paiement s\'ouvre dans votre navigateur, déjà connecté. Les données de carte sont traitées par Stripe et ne passent jamais par nos serveurs.</string>
     <string name="finish_payment">Terminez le paiement dans votre navigateur. Votre forfait s\'active tout seul à votre retour.</string>
     <string name="check_again">Vérifier à nouveau</string>
     <string name="plan_active">Votre forfait est actif. Profitez-en !</string>

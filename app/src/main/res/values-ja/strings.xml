@@ -69,11 +69,9 @@
     <string name="plan_extended10_blurb">Plusの10倍の利用量</string>
     <string name="free_trial_days">%1$d日間の無料トライアル</string>
     <string name="friend_discount">最初の1か月が%1$d%%オフ。友達からの招待です。</string>
-    <string name="consent_terms">利用規約に同意し、プライバシーポリシーを読みました。</string>
-    <string name="consent_immediate">14日間のクーリングオフ期間の終了前にプランをすぐに開始することを求め、開始と同時に撤回権を失うことを理解しています。</string>
     <string name="continue_to_payment">支払いに進む</string>
     <string name="start_free_trial">無料トライアルを開始</string>
-    <string name="payment_in_browser">支払いはブラウザでStripeの安全なページが開きます。カード情報が当社のサーバーに届くことはありません。</string>
+    <string name="payment_in_browser">チェックアウトはログイン済みの状態でブラウザに開きます。カード情報はStripeが処理し、当社のサーバーに届くことはありません。</string>
     <string name="finish_payment">ブラウザで支払いを完了してください。戻るとプランが自動で有効になります。</string>
     <string name="check_again">もう一度確認</string>
     <string name="plan_active">プランが有効になりました。お楽しみください！</string>

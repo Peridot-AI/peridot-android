@@ -112,5 +112,6 @@ data class Trial(val plan: String, val days: Int)
 @Serializable
 data class CheckoutOffer(val trial: Trial? = null, val friendPercentOff: Int? = null)
 
+/** The address of the website's checkout, signed in for this account. */
 @Serializable
 data class CheckoutSession(val url: String)

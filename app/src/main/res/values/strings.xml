@@ -70,11 +70,9 @@
     <string name="plan_extended10_blurb">10x more usage than Plus</string>
     <string name="free_trial_days">%1$d-day free trial</string>
     <string name="friend_discount">%1$d%% off your first month. You were invited by a friend.</string>
-    <string name="consent_terms">I accept the Terms of service and have read the Privacy policy.</string>
-    <string name="consent_immediate">I ask for my plan to start right away, before the 14-day withdrawal period ends, and I understand that I lose my right of withdrawal once it starts.</string>
     <string name="continue_to_payment">Continue to payment</string>
     <string name="start_free_trial">Start free trial</string>
-    <string name="payment_in_browser">The payment opens on Stripe\'s secure page in your browser. Card details never touch our servers.</string>
+    <string name="payment_in_browser">The checkout opens in your browser, already signed in. Card details are handled by Stripe and never touch our servers.</string>
     <string name="finish_payment">Finish the payment in your browser. Your plan switches on by itself when you come back.</string>
     <string name="check_again">Check again</string>
     <string name="plan_active">Your plan is active. Enjoy!</string>

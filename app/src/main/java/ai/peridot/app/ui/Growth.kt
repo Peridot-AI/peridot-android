@@ -1,6 +1,5 @@
 package ai.peridot.app.ui
 
-import ai.peridot.app.BuildConfig
 import ai.peridot.app.R
 import ai.peridot.app.data.CheckoutPlan
 import ai.peridot.app.data.euros
@@ -27,8 +26,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -50,8 +47,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import java.util.Locale
-import java.util.TimeZone
 
 /** Hands a link to the system share sheet (messages, mail, copy…). */
 fun shareText(context: Context, text: String) {
@@ -112,13 +107,9 @@ fun InviteSection(state: ChatState, onLoad: () -> Unit) {
     ) { Text(stringResource(R.string.share_link), color = Peridot.Text) }
 }
 
-/** Buyers from Poland get the statements at purchase in Polish, as on the website. */
-private fun polishBuyer(): Boolean =
-    Locale.getDefault().language == "pl" || TimeZone.getDefault().id == "Europe/Warsaw"
-
 /**
- * Pick a plan and pay on Stripe's page in the browser. Back in the app the account is reloaded (on resume),
- * and the sheet says so when the plan is active.
+ * Pick a plan and pay on the website's checkout in the browser, signed in for this account (the terms are
+ * accepted there). Back in the app the account is reloaded (on resume) until the plan is active.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -129,12 +120,8 @@ fun UpgradeSheet(
     onCheckAgain: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val context = LocalContext.current
     LaunchedEffect(Unit) { onLoad() }
     var selected by rememberSaveable { mutableStateOf("plus") }
-    var terms by rememberSaveable { mutableStateOf(false) }
-    var immediate by rememberSaveable { mutableStateOf(false) }
-    val polish = polishBuyer()
     val paid = (state.user?.plan ?: state.limits?.plan ?: "free") != "free"
 
     ModalBottomSheet(onDismissRequest = onDismiss, containerColor = Peridot.Surface) {
@@ -177,33 +164,11 @@ fun UpgradeSheet(
                         )
                         Spacer(Modifier.height(8.dp))
                     }
-                    ConsentRow(
-                        checked = terms,
-                        onChange = { terms = it },
-                        text = if (polish) "Akceptuję Regulamin i zapoznałem(-am) się z Polityką prywatności." else stringResource(R.string.consent_terms),
-                    )
-                    Row {
-                        TextButton(onClick = { openUrl(context, "${BuildConfig.WEB_URL}/terms${if (polish) "?lang=pl" else ""}") }) {
-                            Text(stringResource(R.string.terms), color = Peridot.Muted, fontSize = 13.sp)
-                        }
-                        TextButton(onClick = { openUrl(context, "${BuildConfig.WEB_URL}/privacy${if (polish) "?lang=pl" else ""}") }) {
-                            Text(stringResource(R.string.privacy), color = Peridot.Muted, fontSize = 13.sp)
-                        }
-                    }
-                    ConsentRow(
-                        checked = immediate,
-                        onChange = { immediate = it },
-                        text = if (polish) {
-                            "Żądam rozpoczęcia świadczenia usługi przed upływem 14-dniowego terminu na odstąpienie od umowy i przyjmuję do wiadomości, że z chwilą rozpoczęcia świadczenia tracę prawo odstąpienia od umowy."
-                        } else {
-                            stringResource(R.string.consent_immediate)
-                        },
-                    )
                     Spacer(Modifier.height(12.dp))
                     val trial = state.offer?.trial?.plan == selected
                     Button(
                         onClick = { onCheckout(selected) },
-                        enabled = terms && immediate && config.enabled,
+                        enabled = config.enabled,
                         colors = ButtonDefaults.buttonColors(containerColor = Peridot.Mint, contentColor = Peridot.OnMint),
                         modifier = Modifier.fillMaxWidth(),
                     ) {
@@ -261,20 +226,5 @@ private fun PlanCard(plan: CheckoutPlan, selected: Boolean, trialDays: Int?, onC
         }
         Text(stringResource(blurb), color = Peridot.Muted, fontSize = 13.sp)
         Text(stringResource(R.string.messages_per_day, plan.dailyMessages), fontSize = 13.sp)
-    }
-}
-
-@Composable
-private fun ConsentRow(checked: Boolean, onChange: (Boolean) -> Unit, text: String) {
-    Row(
-        Modifier.fillMaxWidth().clickable { onChange(!checked) }.padding(vertical = 4.dp),
-        verticalAlignment = Alignment.Top,
-    ) {
-        Checkbox(
-            checked = checked,
-            onCheckedChange = onChange,
-            colors = CheckboxDefaults.colors(checkedColor = Peridot.Mint, checkmarkColor = Peridot.OnMint),
-        )
-        Text(text, fontSize = 13.sp, lineHeight = 18.sp, modifier = Modifier.padding(top = 12.dp))
     }
 }

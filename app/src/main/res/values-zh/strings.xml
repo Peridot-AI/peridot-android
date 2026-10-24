@@ -69,11 +69,9 @@
     <string name="plan_extended10_blurb">用量是 Plus 的 10 倍</string>
     <string name="free_trial_days">%1$d 天免费试用</string>
     <string name="friend_discount">首月立减 %1$d%%。你是受好友邀请加入的。</string>
-    <string name="consent_terms">我接受服务条款，并已阅读隐私政策。</string>
-    <string name="consent_immediate">我要求套餐立即开始（在 14 天撤回期结束前），并知悉一旦开始即失去撤回权。</string>
     <string name="continue_to_payment">继续付款</string>
     <string name="start_free_trial">开始免费试用</string>
-    <string name="payment_in_browser">付款将在浏览器中的 Stripe 安全页面打开，卡信息不会经过我们的服务器。</string>
+    <string name="payment_in_browser">结账页面将在浏览器中打开，并已自动登录。卡信息由 Stripe 处理，不会经过我们的服务器。</string>
     <string name="finish_payment">请在浏览器中完成付款。返回后套餐会自动生效。</string>
     <string name="check_again">重新检查</string>
     <string name="plan_active">你的套餐已生效，尽情使用吧！</string>
