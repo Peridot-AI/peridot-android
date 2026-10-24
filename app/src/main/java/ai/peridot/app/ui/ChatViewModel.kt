@@ -3,6 +3,12 @@ package ai.peridot.app.ui
 import ai.peridot.app.R
 import ai.peridot.app.data.ApiException
 import ai.peridot.app.data.ApiMessage
+import ai.peridot.app.data.CheckoutConfig
+import ai.peridot.app.data.CheckoutOffer
+import ai.peridot.app.data.ReferralStats
+import ai.peridot.app.data.ShareInfo
+import ai.peridot.app.data.shareLink
+import java.util.Locale
 import ai.peridot.app.data.Conversation
 import ai.peridot.app.data.Effort
 import ai.peridot.app.data.Limits
@@ -47,6 +53,13 @@ data class ChatState(
     val loadingConversation: Boolean = false,
     /** A one-off message for the snackbar. */
     val notice: String? = null,
+    /** The open chat's public link, if it is shared */
+    val share: ShareInfo? = null,
+    val referrals: ReferralStats? = null,
+    val plans: CheckoutConfig? = null,
+    val offer: CheckoutOffer? = null,
+    /** A payment was started in the browser: the account is reloaded until the plan changes */
+    val awaitingPlan: Boolean = false,
 ) {
     val signedIn get() = user != null
     val currentModel get() = models.firstOrNull { it.id == model }
@@ -155,7 +168,15 @@ class ChatViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             try {
                 val me = api.me()
-                _state.update { it.copy(user = me.user, limits = me.limits) }
+                val activated = _state.value.awaitingPlan && (me.user.plan ?: "free") != "free"
+                _state.update {
+                    it.copy(
+                        user = me.user,
+                        limits = me.limits,
+                        awaitingPlan = it.awaitingPlan && !activated,
+                        notice = if (activated) string(R.string.plan_active) else it.notice,
+                    )
+                }
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
@@ -220,7 +241,7 @@ class ChatViewModel(app: Application) : AndroidViewModel(app) {
         streamJob?.cancel()
         streamJob = null
         chatSerial++
-        _state.update { it.copy(messages = emptyList(), conversationId = null, streaming = false, loadingConversation = false) }
+        _state.update { it.copy(messages = emptyList(), conversationId = null, streaming = false, loadingConversation = false, share = null) }
     }
 
     fun openConversation(conversation: Conversation) {
@@ -356,6 +377,85 @@ class ChatViewModel(app: Application) : AndroidViewModel(app) {
             throw e
         } catch (e: Exception) {
             // History is a convenience: a failed save never gets in the way of the chat
+        }
+    }
+
+    // ── Sharing ──
+
+    fun loadShare() {
+        val id = _state.value.conversationId ?: return
+        viewModelScope.launch {
+            val share = runCatching { api.shareStatus(id) }.getOrNull()
+            if (_state.value.conversationId == id) _state.update { it.copy(share = share) }
+        }
+    }
+
+    /** Makes (or refreshes) the public copy of the open chat and hands its link to [onLink]. */
+    fun share(onLink: (String) -> Unit) {
+        val id = _state.value.conversationId ?: return
+        viewModelScope.launch {
+            try {
+                val share = api.share(id)
+                _state.update { it.copy(share = share) }
+                onLink(shareLink(share.id))
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                if (!expiredSession(e)) _state.update { it.copy(notice = describe(e)) }
+            }
+        }
+    }
+
+    fun stopSharing() {
+        val id = _state.value.conversationId ?: return
+        viewModelScope.launch {
+            try {
+                api.stopSharing(id)
+                _state.update { it.copy(share = null, notice = string(R.string.sharing_stopped)) }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                if (!expiredSession(e)) _state.update { it.copy(notice = describe(e)) }
+            }
+        }
+    }
+
+    // ── Invites and plans ──
+
+    fun loadReferrals() {
+        if (token == null) return
+        viewModelScope.launch {
+            runCatching { api.referrals() }.onSuccess { r -> _state.update { it.copy(referrals = r) } }
+        }
+    }
+
+    fun loadPlans() {
+        viewModelScope.launch {
+            try {
+                val config = api.checkoutConfig()
+                val offer = if (token != null) runCatching { api.checkoutOffer() }.getOrNull() else null
+                _state.update { it.copy(plans = config, offer = offer) }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                _state.update { it.copy(notice = describe(e)) }
+            }
+        }
+    }
+
+    /** Opens Stripe's checkout page for the plan (through [openUrl]); back in the app, the account is reloaded. */
+    fun checkout(plan: String, openUrl: (String) -> Unit) {
+        val lang = Locale.getDefault().language
+        viewModelScope.launch {
+            try {
+                val url = api.checkoutSession(plan, lang)
+                _state.update { it.copy(awaitingPlan = true) }
+                openUrl(url)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                if (!expiredSession(e)) _state.update { it.copy(notice = describe(e)) }
+            }
         }
     }
 

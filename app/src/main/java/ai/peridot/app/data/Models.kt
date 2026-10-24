@@ -75,3 +75,42 @@ enum class Effort(val apiValue: String) { Low("Low"), Medium("Medium"), High("Hi
 
 /** An error from the API, with the server's message (already user-facing) and code. */
 class ApiException(message: String, val status: Int, val code: String? = null) : Exception(message)
+
+// ── Shared chats ──
+
+/** A chat's public, read-only copy at WEB_URL/share/<id>. */
+@Serializable
+data class ShareInfo(val id: String, val updatedAt: String? = null)
+
+@Serializable
+data class ShareResponse(val share: ShareInfo? = null)
+
+// ── Invites ──
+
+@Serializable
+data class ReferralStats(
+    val code: String,
+    val invited: Int = 0,
+    val paid: Int = 0,
+    val earnedCents: Int = 0,
+    val friendPercentOff: Int = 0,
+    val referrerCreditCents: Int = 0,
+)
+
+// ── Plans and checkout ──
+
+@Serializable
+data class CheckoutPlan(val id: String, val name: String, val amountCents: Int, val dailyMessages: Int = 0)
+
+@Serializable
+data class CheckoutConfig(val enabled: Boolean = false, val plans: List<CheckoutPlan> = emptyList())
+
+@Serializable
+data class Trial(val plan: String, val days: Int)
+
+/** What checkout offers this account: the free trial (once, Plus) and the discount for invited friends. */
+@Serializable
+data class CheckoutOffer(val trial: Trial? = null, val friendPercentOff: Int? = null)
+
+@Serializable
+data class CheckoutSession(val url: String)

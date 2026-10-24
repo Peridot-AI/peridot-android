@@ -78,6 +78,32 @@ class PeridotApi(
         send<JsonObject>("DELETE", "/conversations/$id", null)
     }
 
+    // ── Sharing (a public, read-only copy of a chat) ──
+    suspend fun shareStatus(id: Long): ShareInfo? = get<ShareResponse>("/conversations/$id/share").share
+
+    suspend fun share(id: Long): ShareInfo =
+        send<ShareResponse>("POST", "/conversations/$id/share", null).share ?: throw ApiException("Could not share this chat", 500)
+
+    suspend fun stopSharing(id: Long) {
+        send<JsonObject>("DELETE", "/conversations/$id/share", null)
+    }
+
+    // ── Invites ──
+    suspend fun referrals(): ReferralStats = get("/referrals")
+
+    // ── Plans: the payment itself happens on Stripe's page in the browser ──
+    suspend fun checkoutConfig(): CheckoutConfig = get("/checkout/config")
+
+    suspend fun checkoutOffer(): CheckoutOffer = get("/checkout/offer")
+
+    /** Stripe's checkout page for the plan; the consents were given in the app. */
+    suspend fun checkoutSession(plan: String, lang: String): String =
+        post<CheckoutSession>("/checkout/session", buildJsonObject {
+            put("plan", plan)
+            put("lang", lang)
+            put("consent", buildJsonObject { put("terms", true); put("immediateStart", true) })
+        }).url
+
     // ── Streaming chat ──
     /**
      * Streams one answer as text chunks. Cancelling the collector closes the connection, which

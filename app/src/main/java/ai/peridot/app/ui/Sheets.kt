@@ -34,6 +34,8 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -56,6 +58,7 @@ fun ModelSheet(
     state: ChatState,
     onSelect: (Model) -> Unit,
     onEffort: (Effort) -> Unit,
+    onUpgrade: () -> Unit,
     onDismiss: () -> Unit,
 ) {
     ModalBottomSheet(onDismissRequest = onDismiss, containerColor = Peridot.Surface) {
@@ -69,7 +72,11 @@ fun ModelSheet(
                 )
             }
             state.models.forEach { model ->
-                ModelRow(model, selected = model.id == state.model, onClick = { onSelect(model); onDismiss() })
+                ModelRow(
+                    model,
+                    selected = model.id == state.model,
+                    onClick = { if (model.locked) onUpgrade() else { onSelect(model); onDismiss() } },
+                )
             }
 
             SheetTitle(stringResource(R.string.effort), Modifier.padding(top = 12.dp))
@@ -110,7 +117,7 @@ private fun ModelRow(model: Model, selected: Boolean, onClick: () -> Unit) {
             .fillMaxWidth()
             .padding(horizontal = 12.dp)
             .clip(RoundedCornerShape(12.dp))
-            .clickable(enabled = !model.locked, onClick = onClick)
+            .clickable(onClick = onClick)
             .background(if (selected) Peridot.SurfaceHigh else Peridot.Surface)
             .padding(horizontal = 12.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -153,6 +160,8 @@ fun AccountSheet(
     state: ChatState,
     onRefresh: () -> Unit,
     onSignOut: () -> Unit,
+    onUpgrade: () -> Unit,
+    onLoadInvites: () -> Unit,
     onDismiss: () -> Unit,
 ) {
     val context = LocalContext.current
@@ -191,6 +200,21 @@ fun AccountSheet(
                 Label(stringResource(R.string.monthly_usage))
                 Text(stringResource(R.string.percent_used, limits.monthlyPercent), fontSize = 16.sp)
                 Meter(limits.monthlyPercent / 100f)
+            }
+
+            val plan = limits?.plan ?: user?.plan ?: "free"
+            if (user != null && plan == "free" && limits?.unlimited != true) {
+                Spacer(Modifier.height(18.dp))
+                Button(
+                    onClick = onUpgrade,
+                    colors = ButtonDefaults.buttonColors(containerColor = Peridot.Mint, contentColor = Peridot.OnMint),
+                    modifier = Modifier.fillMaxWidth(),
+                ) { Text(stringResource(R.string.upgrade_plan), fontWeight = FontWeight.SemiBold) }
+            }
+
+            if (user != null) {
+                Spacer(Modifier.height(22.dp))
+                InviteSection(state, onLoad = onLoadInvites)
             }
 
             Spacer(Modifier.height(26.dp))

@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
@@ -71,7 +72,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 
@@ -87,6 +90,15 @@ fun ChatScreen(vm: ChatViewModel = viewModel()) {
     var showSignIn by rememberSaveable { mutableStateOf(false) }
     var showModels by rememberSaveable { mutableStateOf(false) }
     var showAccount by rememberSaveable { mutableStateOf(false) }
+    var showShare by rememberSaveable { mutableStateOf(false) }
+    var showUpgrade by rememberSaveable { mutableStateOf(false) }
+    val context = LocalContext.current
+
+    // Back from the payment page in the browser: see whether the plan is active yet
+    LifecycleResumeEffect(state.awaitingPlan) {
+        if (state.awaitingPlan) vm.refreshAccount()
+        onPauseOrDispose {}
+    }
     var renaming by remember { mutableStateOf<Conversation?>(null) }
     var deleting by remember { mutableStateOf<Conversation?>(null) }
 
@@ -138,6 +150,11 @@ fun ChatScreen(vm: ChatViewModel = viewModel()) {
                         }
                     },
                     actions = {
+                        if (state.signedIn && state.conversationId != null && state.messages.isNotEmpty()) {
+                            IconButton(onClick = { showShare = true }) {
+                                Icon(Icons.Default.Share, contentDescription = stringResource(R.string.share_chat))
+                            }
+                        }
                         IconButton(onClick = vm::newChat, enabled = state.messages.isNotEmpty() || state.conversationId != null) {
                             Icon(Icons.Default.Add, contentDescription = stringResource(R.string.new_chat))
                         }
@@ -174,10 +191,41 @@ fun ChatScreen(vm: ChatViewModel = viewModel()) {
         SignInDialog(vm, onDismiss = { showSignIn = false; vm.clearAuthError() })
     }
     if (showModels) {
-        ModelSheet(state, onSelect = vm::selectModel, onEffort = vm::selectEffort, onDismiss = { showModels = false })
+        ModelSheet(
+            state,
+            onSelect = vm::selectModel,
+            onEffort = vm::selectEffort,
+            onUpgrade = { showModels = false; if (state.signedIn) showUpgrade = true else showSignIn = true },
+            onDismiss = { showModels = false },
+        )
     }
     if (showAccount) {
-        AccountSheet(state, onRefresh = vm::refreshAccount, onSignOut = { showAccount = false; vm.signOut() }, onDismiss = { showAccount = false })
+        AccountSheet(
+            state,
+            onRefresh = vm::refreshAccount,
+            onSignOut = { showAccount = false; vm.signOut() },
+            onUpgrade = { showAccount = false; showUpgrade = true },
+            onLoadInvites = vm::loadReferrals,
+            onDismiss = { showAccount = false },
+        )
+    }
+    if (showShare) {
+        ShareChatDialog(
+            state,
+            onLoad = vm::loadShare,
+            onShare = { vm.share { link -> shareText(context, link) } },
+            onStop = vm::stopSharing,
+            onDismiss = { showShare = false },
+        )
+    }
+    if (showUpgrade) {
+        UpgradeSheet(
+            state,
+            onLoad = vm::loadPlans,
+            onCheckout = { plan -> vm.checkout(plan) { url -> openUrl(context, url) } },
+            onCheckAgain = vm::refreshAccount,
+            onDismiss = { showUpgrade = false },
+        )
     }
     renaming?.let { conversation ->
         RenameDialog(conversation, onRename = { vm.renameConversation(conversation, it) }, onDismiss = { renaming = null })
